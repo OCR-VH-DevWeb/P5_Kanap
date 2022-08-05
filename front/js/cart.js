@@ -23,18 +23,18 @@ export function addToCart(idProduct, colorProduct, quantityProduct) {
      let index = cart.findIndex((p) => (p.id == idProduct && p.color == colorProduct)) 
      // dans ce cas, c'est si le produit existe
      if(index != -1) {
-//         const totalQuantity = cart[index].quantity + cartLine.quantity;
-//         if(totalQuantity > 100) {                   // fonction addToCart modifications
-//             window.alert("Vous avez dépassé la quantité maximale");
-//             return;
-//         }     splicer l'index 
-//         console.log(totalQuantity);
-// 
-//         console.log(cartLine);
-//         cart[index].quantity += cartLine.quantity;  // modifie panier pour incrémenter avec la saisie de l'utilisateur, ajoute quantity saisie à celle existante
-//         console.log(cart[index]);                   // contenu panier
-    }
-    else {
+        const totalQuantity = cart[index].quantity + cartLine.quantity;
+        if(totalQuantity > 100) {                   // fonction addToCart modifications
+            window.alert("Vous avez dépassé la quantité maximale");
+            return;
+        }                                           //splicer l'index 
+        console.log(totalQuantity);
+
+        console.log(cartLine);
+        cart[index].quantity += cartLine.quantity;  // modifie panier pour incrémenter avec la saisie de l'utilisateur, ajoute quantity saisie à celle existante
+        console.log(cart[index]);                   // contenu panier
+    
+      } else {
             cart.push(cartLine);                    // push cartLine (saisie utilisateur) donc push produit dans panier
         }
     //enregistrer la panier dans localStorage, cart tableau mis a jour selon condition
@@ -70,70 +70,109 @@ function getCart() {                               // fonction getCart (récupé
  }
 
  function showCartLine(product, basketColor) {
-  console.log(basketColor);
+  console.log(product);
 
-const section = document.getElementById("cart__items");
-console.log(section);
-                                                        // parcourir l'array (cart)
-const articleCartItem = document.createElement("article"); //création  article
-articleCartItem.classList.add("cart__item");               //créa class cart__item
-articleCartItem.dataset.id = product._id;                        //créa attribut data-id
-articleCartItem.dataset.color = basketColor;                  //créa attribut dat-color
+  const section = document.getElementById("cart__items");
+  console.log(section);
+                                                          // parcourir l'array (cart)
+  const articleCartItem = document.createElement("article"); //création  article
+  articleCartItem.classList.add("cart__item");               //créa class cart__item
+  articleCartItem.dataset.id = product._id;                        //créa attribut data-id
+  articleCartItem.dataset.color = basketColor;                  //créa attribut dat-color
 
-section.appendChild(articleCartItem);                  //le rattacher à section mais failed
-console.log(articleCartItem);
+  section.appendChild(articleCartItem);                  //le rattacher à section mais failed
+  console.log(articleCartItem);
 
-const divCartItemImage = document.createElement("div");         //créa div
-divCartItemImage.classList.add("cart__item__img");              // créa classe "cart__item__img"
+  const divCartItemImage = document.createElement("div");         //créa div
+  divCartItemImage.classList.add("cart__item__img");              // créa classe "cart__item__img"
 
-articleCartItem.appendChild(divCartItemImage);
-console.log(divCartItemImage);
+  articleCartItem.appendChild(divCartItemImage);
+  console.log(divCartItemImage);
+  //---------------------------------------------------------------------------------//
+  const imageItemCart = document.createElement("img");
+  imageItemCart.src = product.imageUrl;
+  imageItemCart.alt = product.altTxt;
 
-const imageItemCart = document.createElement("img");
-imageItemCart.src = product.imageUrl;
-imageItemCart.alt = product.altTxt;
+  divCartItemImage.appendChild(imageItemCart);
+  console.log(imageItemCart);
+  //---------------------------------------------------------------------------------//
+  const divCartItemContent = document.createElement("div");
+  divCartItemContent.classList.add("cart__item__content");
 
-divCartItemImage.appendChild(imageItemCart);
-console.log(imageItemCart);
+  articleCartItem.appendChild(divCartItemContent);
+  console.log(divCartItemContent);
+  //---------------------------------------------------------------------------------//
+  const divCartItemContentDescription = document.createElement("div");
+  divCartItemContentDescription.classList.add("cart__item__content__description");
 
-const divCartItemContent = document.createElement("div");
-divCartItemContent.classList.add("cart__item__content");
+  divCartItemContent.appendChild(divCartItemContentDescription);
+  console.log(divCartItemContentDescription);
+  //---------------------------------------------------------------------------------//
+  const titleDescription = document.createElement("h2");
+  titleDescription.innerText = product.name;
 
-articleCartItem.appendChild(divCartItemContent);
-console.log(divCartItemContent);
+  divCartItemContentDescription.appendChild(titleDescription)
+  console.log(titleDescription);
+  //---------------------------------------------------------------------------------//
+  const pColorDescription = document.createElement("p"); //option sinon
+  pColorDescription.innerText = basketColor;
 
-const divCartItemContentDescription = document.createElement("div");
-divCartItemContentDescription.classList.add("cart__item__content__description");
+  divCartItemContentDescription.appendChild(pColorDescription);
+  console.log(pColorDescription);
+  //---------------------------------------------------------------------------------//
+  const formatedPrice = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(product.price) //new Intl.NumberFormat("fr-FR").format(product.price);
+  const pPriceDescription = document.createElement("p");
+  pPriceDescription.innerText = formatedPrice;
 
-divCartItemContent.appendChild(divCartItemContentDescription);
-console.log(divCartItemContentDescription);
+  divCartItemContentDescription.appendChild(pPriceDescription);
+  console.log(pPriceDescription);
+  //---------------------------------------------------------------------------------//
+  const divCartItemContentSettings = document.createElement("div");
+  divCartItemContentSettings.classList.add("cart__item__content__settings");
 
-const titleDescription = document.createElement("h2");
-titleDescription.innerText = product.name;
+  divCartItemContent.appendChild(divCartItemContentSettings);
+  console.log(divCartItemContentSettings);
+  //---------------------------------------------------------------------------------//
+  const divContentSettingsQuantity = document.createElement("div");
+  divContentSettingsQuantity.classList.add("cart__item__content__settings__quantity");
 
-divCartItemContentDescription.appendChild(titleDescription)
-console.log(titleDescription);
+  divCartItemContentSettings.appendChild(divContentSettingsQuantity);
+  console.log(divContentSettingsQuantity);
+  //---------------------------------------------------------------------------------//
+  const pSettingsQuantity = document.createElement("p");
+  pSettingsQuantity.textContent = "Qté :";
 
-const pColorDescription = document.createElement("p"); //option sinon
-pColorDescription.innerText = basketColor;
+  divContentSettingsQuantity.appendChild(pSettingsQuantity);
+  console.log(pSettingsQuantity);
+  //---------------------------------------------------------------------------------//
+  const inputSettingsQuantity = document.createElement("input");
+  inputSettingsQuantity.type = Number;
+  inputSettingsQuantity.classList.add("itemQuantity");
+  inputSettingsQuantity.name = "itemQuantity";
+  inputSettingsQuantity.min = "1";
+  inputSettingsQuantity.max = "100";
+  inputSettingsQuantity.value = "";
 
-divCartItemContentDescription.appendChild(pColorDescription);
-console.log(pColorDescription);
+  divContentSettingsQuantity.appendChild(inputSettingsQuantity);
+  console.log(inputSettingsQuantity);
+  //---------------------------------------------------------------------------------//
+  const divContentDelete = document.createElement("div");
+  divContentDelete.classList.add("cart__item__content__settings__delete");
 
-const formatedPrice = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(product.price) //new Intl.NumberFormat("fr-FR").format(product.price);
-const pPriceDescription = document.createElement("p");
-pPriceDescription.innerText = formatedPrice;
+  divCartItemContentSettings.appendChild(divContentDelete);
+  console.log(divContentDelete);
+  //---------------------------------------------------------------------------------//
+  const pDeleteItem = document.createElement("p");
+  pDeleteItem.classList.add("deleteItem");
+  pDeleteItem.innerText = "Supprimer";
 
-divCartItemContentDescription.appendChild(pPriceDescription);
-console.log(pPriceDescription);
+  divContentDelete.appendChild(pDeleteItem);
+  console.log(pDeleteItem);
 
-const divCartItemContentSettings = document.createElement("div");
-divCartItemContentSettings.classList.add("cart__item__content__settings");
 
-divCartItemContent.appendChild(divCartItemContentSettings);
-console.log(divCartItemContentSettings);
 
 }
+
 // constant pDelete, faire addEventListener ("click") à l'int"reieur j'appele deleteBasket, avec id color
 // }product._id, basketColor
 
@@ -147,20 +186,6 @@ console.log(divCartItemContentSettings);
 // // if c'est ça supprimer
 // 
 // 
-// const divContentSettingsQuantity = document.createElement("div");
-// divContentSettingsQuantity.classList.add(cart__item__content__settings__quantity);
-// 
-// divCartItemContentSettings.appendChild(divContentSettingsQuantity);
-// console.log(divContentSettingsQuantity);
-// 
-// const pContentSettingsQuantity = document.createElement("p");
-// pContentSettingsQuantity.innerText = "Qté :" + totalQuantity;
-// 
-// pContentSettingsQuantity.appendChild(divCartItemContentSettings);
-// console.log(pContentSettingsQuantity);
-// 
-// const inputSettingsQuantity = document.createElement("input");
-// inputSettingsQuantity.type = 
  
 // <div class="cart__item__content">
 //   <div class="cart__item__content__description">
