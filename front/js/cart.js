@@ -81,57 +81,48 @@ function getCart() {                               // fonction getCart (récupé
   articleCartItem.dataset.color = basketColor;                  //créa attribut dat-color
 
   section.appendChild(articleCartItem);                  //le rattacher à section mais failed
-  console.log(articleCartItem);
 
   const divCartItemImage = document.createElement("div");         //créa div
   divCartItemImage.classList.add("cart__item__img");              // créa classe "cart__item__img"
 
   articleCartItem.appendChild(divCartItemImage);
-  console.log(divCartItemImage);
   //---------------------------------------------------------------------------------//
   const imageItemCart = document.createElement("img");
   imageItemCart.src = product.imageUrl;
   imageItemCart.alt = product.altTxt;
 
   divCartItemImage.appendChild(imageItemCart);
-  console.log(imageItemCart);
   //---------------------------------------------------------------------------------//
   const divCartItemContent = document.createElement("div");
   divCartItemContent.classList.add("cart__item__content");
 
   articleCartItem.appendChild(divCartItemContent);
-  console.log(divCartItemContent);
   //---------------------------------------------------------------------------------//
   const divCartItemContentDescription = document.createElement("div");
   divCartItemContentDescription.classList.add("cart__item__content__description");
 
   divCartItemContent.appendChild(divCartItemContentDescription);
-  console.log(divCartItemContentDescription);
   //---------------------------------------------------------------------------------//
   const titleDescription = document.createElement("h2");
   titleDescription.innerText = product.name;
 
   divCartItemContentDescription.appendChild(titleDescription)
-  console.log(titleDescription);
   //---------------------------------------------------------------------------------//
   const pColorDescription = document.createElement("p"); //option sinon
   pColorDescription.innerText = basketColor;
 
   divCartItemContentDescription.appendChild(pColorDescription);
-  console.log(pColorDescription);
   //---------------------------------------------------------------------------------//
   const formatedPrice = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(product.price) //new Intl.NumberFormat("fr-FR").format(product.price);
   const pPriceDescription = document.createElement("p");
   pPriceDescription.innerText = formatedPrice;
 
   divCartItemContentDescription.appendChild(pPriceDescription);
-  console.log(pPriceDescription);
   //---------------------------------------------------------------------------------//
   const divCartItemContentSettings = document.createElement("div");
   divCartItemContentSettings.classList.add("cart__item__content__settings");
 
   divCartItemContent.appendChild(divCartItemContentSettings);
-  console.log(divCartItemContentSettings);
   //---------------------------------------------------------------------------------//
   const divContentSettingsQuantity = document.createElement("div");
   divContentSettingsQuantity.classList.add("cart__item__content__settings__quantity");
@@ -140,18 +131,27 @@ function getCart() {                               // fonction getCart (récupé
   console.log(divContentSettingsQuantity);
   //---------------------------------------------------------------------------------//
   const pSettingsQuantity = document.createElement("p");
+  const productArray = getCart();
+  let quantityLine;
+  for(let productLineIndex in productArray) {
+    let lineProduct = productArray[productLineIndex];
+    if (product._id === lineProduct.id) {
+      quantityLine = lineProduct.quantity;
+      console.log(quantityLine);
+    }
+  }
   pSettingsQuantity.textContent = "Qté :";
 
   divContentSettingsQuantity.appendChild(pSettingsQuantity);
   console.log(pSettingsQuantity);
   //---------------------------------------------------------------------------------//
   const inputSettingsQuantity = document.createElement("input");
-  inputSettingsQuantity.type = Number;
+  inputSettingsQuantity.type = "Number";
   inputSettingsQuantity.classList.add("itemQuantity");
-  inputSettingsQuantity.name = "itemQuantity";
+  inputSettingsQuantity.name = product.name;
   inputSettingsQuantity.min = "1";
   inputSettingsQuantity.max = "100";
-  inputSettingsQuantity.value = "";
+  inputSettingsQuantity.value = quantityLine;
 
   divContentSettingsQuantity.appendChild(inputSettingsQuantity);
   console.log(inputSettingsQuantity);
@@ -173,7 +173,7 @@ function getCart() {                               // fonction getCart (récupé
 
 }
 
-// constant pDelete, faire addEventListener ("click") à l'int"reieur j'appele deleteBasket, avec id color
+// constant pDelete, faire addEventListener ("click") à l'intéreieur j'appele deleteBasket, avec id color
 // }product._id, basketColor
 
 // function deleteBasket(id, color) {
