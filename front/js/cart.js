@@ -166,13 +166,17 @@ function showCartLine(product, basketColor, quantity) {
   divContentDelete.appendChild(pDeleteItem);
 
   pDeleteItem.addEventListener('click', () => {
-    deleteBasket(product._id, basketColor)
+    deleteBasket(product._id, basketColor);
+    totalProducts();            //calculer le nombre total de produits
+    totalProductsPrice();        //calculer le nombre total de produits
   });
-  inputSettingsQuantity.addEventListener('input', () => {
-    modifyBasket(product._id, basketColor)
+  inputSettingsQuantity.addEventListener('input', (target) => {
+    modifyBasket(product._id, basketColor, target.target.value); 
+    totalProducts();            //calculer le nombre total de produits
+    totalProductsPrice();        //calculer le nombre total de produits
   });
 }
-//---Supprimer & Modifier le panier------------------------------------------------------------------------------//
+//---Supprimer le panier------------------------------------------------------------------------------//
 function deleteBasket(productId, basketColor) {
   const finalCart = getCart();
   let indexDeleted = finalCart.findIndex(
@@ -192,42 +196,61 @@ function deleteBasket(productId, basketColor) {
   console.log(productId);
   console.log(basketColor);
 };
-
+//---------------------------------------------------------------------------------//
 function modifyBasket(productId, basketColor, quantityInput) {
   const finalCart = getCart();
   let indexModify = finalCart.findIndex(
-    (p) => p.id == productId && p.color == basketColor && p.quantity != quantityInput
+    (p) => p.id == productId && p.color == basketColor 
   );
 
-  finalCart.splice(indexModify, 0);
+  finalCart[indexModify].quantity = quantityInput;
 
-  localStorage.setItem("cart", JSON.parse(quantityProduct));
-
-
+  localStorage.setItem("cart", JSON.stringify(finalCart));
 
   window.alert("Modifié !");
   console.log(productId);
   console.log(basketColor);
-}
+};
 //---------------------------------------------------------------------------------//
-//     (p) => p.id == idProduct && p.color == colorProduct
-//   ));
-// };
-// console.log(getCart);
+//déclarer fonction pour changer quantité du panier
+function totalProducts() {              
+  const totalCartProducts = getCart();                                            //récupérer le panier
+  console.log(totalCartProducts); 
+  
+  let indexModify = totalCartProducts.findIndex(
+    () => "" 
+  );
+    console.log(indexModify);
+  totalCartProducts[indexModify].quantity;
 
+  // let finalQuantityProduct = document.getElementById("totalQuantity");            //créer la variable de quantityTotal let
+  // console.log(finalQuantityProduct); 
+  // finalQuantityProduct.innerText = finalQuantityProduct.value;     
+  // console.log(finalQuantityProduct);
+
+}  
+  
+//parcourir array produits 
+
+//additionner les quantités
+
+//mettre à jour l'interface, selecteur à cibler, //récupérer le noeud html
+
+//mettre à jour sa valeur avec la quantité totale variable = blalb.quelquechose
+
+function totalProductsPrice() {
+  //récupérer le panier
+  //créer la variable de prices let
+  //parcourir array price 
+  //multiplier les quantités * prix
+  //mettre à jour valeur prices
+  //mettre à jour l'interface, selecteur à cibler, //récupérer le noeud html
+  //mettre à jour sa valeur avec la quantité totale variable = blalb.quelquechos
+}
 // deleteItemParagraph.addEventListener("click", () => {
 //   deleteFromCart(product._id, color)
-//   totalProducts()
-//   totalProductsPrice()
-// })
-
-
-
-// 
-// deleteItemParagraph.addEventListener("click", () => {
-//   deleteFromCart(product._id, color)
-//   totalProducts()
-//   totalProductsPrice()
+  // totalProducts()
+  // totalProductsPrice()
 // })
 // 
 // pDeleteItem.addEventListener(
@@ -238,10 +261,6 @@ function modifyBasket(productId, basketColor, quantityInput) {
 //   }
 // );
 //---------------------------------------------------------------------------------//
-
-
-//
-
 // constant pDelete, faire addEventListener ("click") à l'intéreieur j'appele deleteBasket,
 // avec id color
 // }product._id, basketColor
