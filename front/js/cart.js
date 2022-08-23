@@ -121,7 +121,7 @@ function showCartLine(product, basketColor, quantity) {
   const formatedPrice = new Intl.NumberFormat("fr-FR", {
     style: "currency",
     currency: "EUR",
-  }).format(product.price); //new Intl.NumberFormat("fr-FR").format(product.price);
+  }).format(product.price);                             //new Intl.NumberFormat("fr-FR").format(product.price);
   const pPriceDescription = document.createElement("p");
   pPriceDescription.innerText = formatedPrice;
 
@@ -213,40 +213,48 @@ function modifyBasket(productId, basketColor, quantityInput) {
 };
 //---------------------------------------------------------------------------------//
 //déclarer fonction pour changer quantité du panier
-function totalProducts() {              
-  const totalCartProducts = getCart();                                            //récupérer le panier
-  console.log(totalCartProducts); 
+function totalProducts() {  
+  //récupérer le panier            
+  const totalCartProducts = getCart();                                            
+  console.log(totalCartProducts);                                                 
   
-  let indexModify = totalCartProducts.findIndex(
-    () => "" 
-  );
-    console.log(indexModify);
-  totalCartProducts[indexModify].quantity;
+  //créer la variable de quantityTotal let
+  let quantityTotal = 0;
+  
+  //parcourir array produits
+  for(let product of totalCartProducts) {
+    //additionner les quantités
+    quantityTotal += parseInt(product.quantity);                                          //quantityTotal = product.quantity + quantityTotal;
+  }
 
-  // let finalQuantityProduct = document.getElementById("totalQuantity");            //créer la variable de quantityTotal let
-  // console.log(finalQuantityProduct); 
-  // finalQuantityProduct.innerText = finalQuantityProduct.value;     
-  // console.log(finalQuantityProduct);
+  //mettre à jour l'interface, selecteur à cibler, //récupérer le noeud html
+  let finalQuantityProduct = document.getElementById("totalQuantity");
 
+  //mettre à jour sa valeur avec la quantité totale variable = blalb.quelquechose
+  finalQuantityProduct.innerText = quantityTotal;
 }  
-  
-//parcourir array produits 
-
-//additionner les quantités
-
-//mettre à jour l'interface, selecteur à cibler, //récupérer le noeud html
-
-//mettre à jour sa valeur avec la quantité totale variable = blalb.quelquechose
 
 function totalProductsPrice() {
   //récupérer le panier
+  const totalCartProducts = getCart();                                            
+  console.log(totalCartProducts);                                                 
+
   //créer la variable de prices let
+  let priceTotal = 0;
+
   //parcourir array price 
-  //multiplier les quantités * prix
+  for(let product of totalCartProducts) {
+    //multiplier les quantités * prix
+    priceTotal = product * ;
+  }
+
   //mettre à jour valeur prices
   //mettre à jour l'interface, selecteur à cibler, //récupérer le noeud html
   //mettre à jour sa valeur avec la quantité totale variable = blalb.quelquechos
 }
+
+
+
 // deleteItemParagraph.addEventListener("click", () => {
 //   deleteFromCart(product._id, color)
   // totalProducts()
