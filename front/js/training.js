@@ -72,3 +72,32 @@
   //   }
   // }
 //l.189 document.querySelector('article[data-id="' + productId + '"][data-color="' + basketColor + '"]').remove();
+
+// deleteItemParagraph.addEventListener("click", () => {
+//   deleteFromCart(product._id, color)
+  // totalProducts()
+  // totalProductsPrice()
+// })
+// 
+// pDeleteItem.addEventListener(
+//   "click",
+//   function deleteBasket(product, basketColor) {
+//     console.log(product);
+//     console.log(basketColor);
+//   }
+// );
+//---------------------------------------------------------------------------------//
+// constant pDelete, faire addEventListener ("click") à l'intéreieur j'appele deleteBasket,
+// avec id color
+// }product._id, basketColor
+
+// function deleteBasket(id, color) {
+//   window.alert("Supprimé!");
+//   console.log(id);
+//   console.log(color);
+//   //récupérer Cart (panier)
+//   //tester si id=paramètre id et color=paramètre color
+// //.splice(permet de supprier un élément du panier)
+// // if c'est ça supprimer
+//
+//

@@ -81,6 +81,7 @@ function showCartLine(product, basketColor, quantity) {
   const articleCartItem = document.createElement("article"); //création  article
   articleCartItem.classList.add("cart__item"); //créa class cart__item
   articleCartItem.dataset.id = product._id; //créa attribut data-id
+  articleCartItem.dataset.price = product.price;
   articleCartItem.dataset.color = basketColor; //créa attribut dat-color
 
   section.appendChild(articleCartItem); //le rattacher à section mais failed
@@ -124,6 +125,8 @@ function showCartLine(product, basketColor, quantity) {
   }).format(product.price);                             //new Intl.NumberFormat("fr-FR").format(product.price);
   const pPriceDescription = document.createElement("p");
   pPriceDescription.innerText = formatedPrice;
+
+  pPriceDescription.dataset.price = product.price;
 
   divCartItemContentDescription.appendChild(pPriceDescription);
   //---------------------------------------------------------------------------------//
@@ -233,7 +236,7 @@ function totalProducts() {
   //mettre à jour sa valeur avec la quantité totale variable = blalb.quelquechose
   finalQuantityProduct.innerText = quantityTotal;
 }  
-
+//---------------------------------------------------------------------------------//
 function totalProductsPrice() {
   //récupérer le panier
   const totalCartProducts = getCart();                                            
@@ -245,41 +248,29 @@ function totalProductsPrice() {
   //parcourir array price 
   for(let product of totalCartProducts) {
     //multiplier les quantités * prix
-    priceTotal = product * ;
+    priceTotal += parseInt(document.querySelector(`article[data-id="${product.id}"]`).dataset.price) * parseInt(product.quantity);
+
   }
 
-  //mettre à jour valeur prices
-  //mettre à jour l'interface, selecteur à cibler, //récupérer le noeud html
+  //mettre à jour valeur prices, mettre à jour l'interface, selecteur à cibler, //récupérer le noeud html
+  let finalPriceProduct = document.getElementById("totalPrice");
+
   //mettre à jour sa valeur avec la quantité totale variable = blalb.quelquechos
+  const formatedPrice = new Intl.NumberFormat()
+  .format(priceTotal);
+  finalPriceProduct.innerText = formatedPrice;
+
 }
-
-
-
-// deleteItemParagraph.addEventListener("click", () => {
-//   deleteFromCart(product._id, color)
-  // totalProducts()
-  // totalProductsPrice()
-// })
-// 
-// pDeleteItem.addEventListener(
-//   "click",
-//   function deleteBasket(product, basketColor) {
-//     console.log(product);
-//     console.log(basketColor);
-//   }
-// );
 //---------------------------------------------------------------------------------//
-// constant pDelete, faire addEventListener ("click") à l'intéreieur j'appele deleteBasket,
-// avec id color
-// }product._id, basketColor
+//Récupérer et analyser les données saisies par l’utilisateur dans le formulaire.
+//Afficher un message d’erreur si besoin (par exemple lorsqu’un utilisateur renseigne “bonjour” dans le champ “e-mail”).
+//Constituer un objet contact (à partir des données du formulaire) et un tableau de produits
+//---------------------------------------------------------------------------------//
+// premier champ formulaire: prénom
+let firstName = document.getElementById
 
-// function deleteBasket(id, color) {
-//   window.alert("Supprimé!");
-//   console.log(id);
-//   console.log(color);
-//   //récupérer Cart (panier)
-//   //tester si id=paramètre id et color=paramètre color
-// //.splice(permet de supprier un élément du panier)
-// // if c'est ça supprimer
-//
-//
+
+
+
+
+
