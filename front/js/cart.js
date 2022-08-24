@@ -432,18 +432,21 @@ if (document.getElementById("cartAndFormContainer")) {
 
       //faire un fetch post pour lui envoyer les données /order voire specif
       //JSON.stringify(body)
-      fetch("http://localhost:3000/api/order")
-        .then(function (res) {
-          if (res.ok) {
-            return res.json();
-          }
-        })
-        .then(function (product) {
-          showCartLine(product, line.color, line.quantity); //fct pr afficher color
-        })
-        .catch(function (err) {
-          // Une erreur est survenue
-        });
+      fetch("http://localhost:3000/api/order", {
+        method: 'POST',
+        body: JSON.stringify(body)
+      });
+        // .then(function (res) {
+        //   if (res.ok) {
+        //     return res.json();
+        //   }
+        // })
+        // .then(function (product) {
+        //   showCartLine(product, line.color, line.quantity); //fct pr afficher color
+        // })
+        // .catch(function (err) {
+        //   // Une erreur est survenue
+        // });
 
       //ajouter les autres fonctions
       window.alert("Commandé !");
