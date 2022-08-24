@@ -35,7 +35,7 @@ export function addToCart(idProduct, colorProduct, quantityProduct) {
   localStorage.setItem("cart", JSON.stringify(cart));
   //console.log(cart);
 }
-
+//---------------------------------------------------------------------------------//
 function getCart() {
   // fonction getCart (récupérer le panier)
   let basket = localStorage.getItem("cart"); // créer variable pour récupérer le localStorage
@@ -67,16 +67,14 @@ async function cart() {
         showCartLine(product, line.color, line.quantity); //fct pr afficher color
         totalProducts(); //calculer le nombre total de produits
         totalProductsPrice(); //calculer le nombre total de produits
-      
       })
       .catch(function (err) {
         // Une erreur est survenue
       });
   }
 }
-
+//---------------------------------------------------------------------------------//
 function showCartLine(product, basketColor, quantity) {
-  //---------------------------------------------------------------------------------//
   const section = document.getElementById("cart__items");
   // parcourir l'array (cart)
   const articleCartItem = document.createElement("article"); //création  article
@@ -180,8 +178,8 @@ function showCartLine(product, basketColor, quantity) {
     totalProductsPrice(); //calculer le nombre total de produits
   });
 }
-
-//---Supprimer le panier------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------//
+//déclarer la fonction pour supprimer une ligne de produit du panier//
 function deleteBasket(productId, basketColor) {
   const finalCart = getCart();
   let indexDeleted = finalCart.findIndex(
@@ -205,6 +203,8 @@ function deleteBasket(productId, basketColor) {
   console.log(basketColor);
 }
 //---------------------------------------------------------------------------------//
+
+//déclarer la fonction pour modifer la quantité d'un produit
 function modifyBasket(productId, basketColor, quantityInput) {
   const finalCart = getCart();
   let indexModify = finalCart.findIndex(
@@ -228,7 +228,8 @@ function modifyBasket(productId, basketColor, quantityInput) {
   localStorage.setItem("cart", JSON.stringify(finalCart));
 }
 //---------------------------------------------------------------------------------//
-//déclarer fonction pour changer quantité du panier
+
+//déclarer fonction pour calculer la quantité totale de produits du panier
 function totalProducts() {
   //récupérer le panier
   const totalCartProducts = getCart();
@@ -250,6 +251,8 @@ function totalProducts() {
   finalQuantityProduct.innerText = quantityTotal;
 }
 //---------------------------------------------------------------------------------//
+
+//déclarer fonction pour calculer le prix total des produits du panier
 function totalProductsPrice() {
   //récupérer le panier
   const totalCartProducts = getCart();
@@ -275,18 +278,20 @@ function totalProductsPrice() {
   finalPriceProduct.innerText = formatedPrice;
 }
 //---------------------------------------------------------------------------------//
+
 //Récupérer et analyser les données saisies par l’utilisateur dans le formulaire.
 //Afficher un message d’erreur si besoin (par exemple lorsqu’un utilisateur renseigne “bonjour” dans le champ “e-mail”).
 //Constituer un objet contact (à partir des données du formulaire) et un tableau de produits
 //---------------------------------------------------------------------------------//
-
+// Déclarer une condition "si"
 if (document.getElementById("cartAndFormContainer")) {
-  //form existe
-  // premier champ formulaire: prénom
+  // Le formulaire existe alors on déclare et appelle les différentes fonctions pour analyser les champs demandés"
+  // Vérifier et récupérer champ nom
   function verifyFirstName() {
-    //récupère value prénom
+    //récupère value firstName
     let valueName = document.getElementById("firstName").value;
     let errorFirstName = document.getElementById("firstNameErrorMsg");
+
     let masque1 =
       /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ-]+$/;
     if (valueName.match(masque1)) {
@@ -303,11 +308,12 @@ if (document.getElementById("cartAndFormContainer")) {
   });
   //---------------------------------------------------------------------------------//
 
-  //
+  //Vérifier et récupérer champ prénom
   function verifyLastName() {
-    //récupère value prénom
+    //récupère value lastName
     let valueName = document.getElementById("lastName").value;
     let errorLastName = document.getElementById("lastNameErrorMsg");
+
     let masque1 =
       /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ-]+$/;
     if (valueName.match(masque1)) {
@@ -322,45 +328,82 @@ if (document.getElementById("cartAndFormContainer")) {
   document.getElementById("lastName").addEventListener("input", () => {
     verifyLastName();
   });
-  //
+  //---------------------------------------------------------------------------------//
+
+  //Vérifier et récupérer champ adresse
   function verifyAddress() {
-    //récupère value prénom
+    //récupère value address
     let valueAddress = document.getElementById("address").value;
     let errorAddress = document.getElementById("addressErrorMsg");
     console.log(errorAddress);
+
     let masque1 =
-     /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9\s,.'-]{3,}$/;
+      /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9\s,.'-]{3,}$/;
     if (valueAddress.match(masque1)) {
       errorAddress.innerText = "";
+      return true;
     } else {
       errorAddress.innerText = "Ce champ est invalide";
+      return false;
     }
   }
-  
-  document.getElementById("address").addEventListener('input', () => {
+
+  document.getElementById("address").addEventListener("input", () => {
     verifyAddress();
   });
-  //
-  // function verifyFirstName () {
-  //   //récupère value prénom
-  //   let valueName = document.getElementById("firstName").value;
-  //   let errorFirstName = document.getElementById("firstNameErrorMsg");
-  //   console.log(errorFirstName);
-  //   let masque1 = /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ-]+$/;
-  //   if(valueName.match(masque1)) {
-  //     errorFirstName.innerText = "";
-  //   } else {
-  //     errorFirstName.innerText = "Ce champ est invalide";
-  //   }
-  // }
-  //
-  // document.getElementById("firstName").addEventListener('input', () => {
-  //   verifyFirstName();
-  // });
+  //---------------------------------------------------------------------------------//
+
+  //Vérifier et récupérer le champ ville
+  function verifyCity() {
+    //récupère value city
+    let valueCity = document.getElementById("city").value;
+    let errorCity = document.getElementById("cityErrorMsg");
+    console.log(errorCity);
+    let masque1 =
+      /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\s-]+$/;
+
+    if (valueCity.match(masque1)) {
+      errorCity.innerText = "";
+      return true;
+    } else {
+      errorCity.innerText = "Ce champ est invalide";
+      return false;
+    }
+  }
+
+  document.getElementById("city").addEventListener("input", () => {
+    verifyCity();
+  });
+  //---------------------------------------------------------------------------------//
+
+  //Vérifier et récupérer le champ email
+  function verifyEmail() {
+    //récupère value email
+    let valueEmail = document.getElementById("email").value;
+    let errorEmail = document.getElementById("emailErrorMsg");
+    console.log(errorEmail);
+    let masque1 =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gim;
+
+    if (valueEmail.match(masque1)) {
+      errorEmail.innerText = "";
+      return true;
+    } else {
+      errorEmail.innerText = "Ce champ est invalide";
+      return false;
+    }
+  }
+
+  document.getElementById("email").addEventListener("input", () => {
+    verifyEmail();
+  });
+//---------------------------------------------------------------------------------//
 
   document.getElementById("order").addEventListener("click", (e) => {
-    e.preventDefault(); //empêcher le comportement par défaut
+    //empêcher le comportement par défaut
+    e.preventDefault(); 
     if (verifyFirstName() && verifyLastName()) {
+      //créer objet contact
       let contact = {
         firstName: document.getElementById("firstName").value,
         lastName: document.getElementById("lastName").value,
@@ -370,13 +413,14 @@ if (document.getElementById("cartAndFormContainer")) {
       };
       console.log(contact);
 
+      //créer array de produits
       let products = [];
 
       let cart = getCart();
       for (let line of cart) {
         let id = line.id;
         products.push(id);
-      } //récupère un tableau vide ou un tableau d'objet de produit
+      } //récupère un tableau vide ou un tableau d'objet de produits
       console.log(products);
 
       let body = {
