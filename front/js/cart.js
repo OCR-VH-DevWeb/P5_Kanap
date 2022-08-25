@@ -247,7 +247,7 @@ function totalProducts() {
   //mettre à jour l'interface, selecteur à cibler, //récupérer le noeud html
   let finalQuantityProduct = document.getElementById("totalQuantity");
 
-  //mettre à jour sa valeur avec la quantité totale variable = blalb.quelquechose
+  //mettre à jour sa valeur avec la quantité totale variable
   finalQuantityProduct.innerText = quantityTotal;
 }
 //---------------------------------------------------------------------------------//
@@ -397,11 +397,11 @@ if (document.getElementById("cartAndFormContainer")) {
   document.getElementById("email").addEventListener("input", () => {
     verifyEmail();
   });
-//---------------------------------------------------------------------------------//
+  //---------------------------------------------------------------------------------//
 
   document.getElementById("order").addEventListener("click", (e) => {
     //empêcher le comportement par défaut
-    e.preventDefault(); 
+    e.preventDefault();
     if (verifyFirstName() && verifyLastName()) {
       //créer objet contact
       let contact = {
@@ -432,21 +432,25 @@ if (document.getElementById("cartAndFormContainer")) {
 
       //faire un fetch post pour lui envoyer les données /order voire specif
       //JSON.stringify(body)
-      fetch("http://localhost:3000/api/order", {
-        method: 'POST',
-        body: JSON.stringify(body)
-      });
-        // .then(function (res) {
-        //   if (res.ok) {
-        //     return res.json();
-        //   }
-        // })
-        // .then(function (product) {
-        //   showCartLine(product, line.color, line.quantity); //fct pr afficher color
-        // })
-        // .catch(function (err) {
-        //   // Une erreur est survenue
-        // });
+      fetch("http://localhost:3000/api/products/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(body),
+      })
+        .then(function (res) {
+          if (res.ok && res.status === 201) {
+            return res.json();
+          }
+        })
+        .then(function (response) {
+          window.location.href =
+            "/front/html/confirmation.html?orderId=" + response.orderId;
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
 
       //ajouter les autres fonctions
       window.alert("Commandé !");
