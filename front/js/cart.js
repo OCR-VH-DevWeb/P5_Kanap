@@ -383,7 +383,8 @@ if (document.getElementById("cartAndFormContainer")) {
     let errorEmail = document.getElementById("emailErrorMsg");
     console.log(errorEmail);
     let masque1 =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gim;
+    /^[\w-.]+@([\w-]+.)+[\w-]{2,5}$/;
+      // /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gim;
 
     if (valueEmail.match(masque1)) {
       errorEmail.innerText = "";
@@ -402,7 +403,7 @@ if (document.getElementById("cartAndFormContainer")) {
   document.getElementById("order").addEventListener("click", (e) => {
     //empêcher le comportement par défaut
     e.preventDefault();
-    if (verifyFirstName() && verifyLastName()) {
+    if (verifyFirstName() && verifyLastName() && verifyAddress() && verifyCity() && verifyEmail()) {
       //créer objet contact
       let contact = {
         firstName: document.getElementById("firstName").value,
@@ -417,43 +418,49 @@ if (document.getElementById("cartAndFormContainer")) {
       let products = [];
 
       let cart = getCart();
-      for (let line of cart) {
-        let id = line.id;
-        products.push(id);
-      } //récupère un tableau vide ou un tableau d'objet de produits
-      console.log(products);
+      console.log(cart);
 
-      let body = {
-        //réunir dans un objet
-        contact: contact,
-        products: products,
-      };
-      console.log(body);
+      if(cart.length == 0) {
+        window.alert("Attention, vous ne pouvez pas commander sans produit dans votre panier")
+      } else {
+        for (let line of cart) {
+          let id = line.id;
+          products.push(id);
+        } //récupère un tableau vide ou un tableau d'objet de produits
+        console.log(products);
 
-      //faire un fetch post pour lui envoyer les données /order voire specif
-      //JSON.stringify(body)
-      fetch("http://localhost:3000/api/products/order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify(body),
-      })
-        .then(function (res) {
-          if (res.ok && res.status === 201) {
-            return res.json();
-          }
+        let body = {
+          //réunir dans un objet
+          contact: contact,
+          products: products,
+        };
+        console.log(body);
+
+        //faire un fetch post pour lui envoyer les données /order voire specif
+        //JSON.stringify(body)
+        fetch("http://localhost:3000/api/products/order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+          },
+          body: JSON.stringify(body),
         })
-        .then(function (response) {
-          window.location.href =
-            "/front/html/confirmation.html?orderId=" + response.orderId;
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
+          .then(function (res) {
+            if (res.ok && res.status === 201) {
+              return res.json();
+            }
+          })
+          .then(function (response) {
+            window.location.href =
+              "/front/html/confirmation.html?orderId=" + response.orderId;
+          })
+          .catch(function (err) {
+            console.log(err);
+          });
 
-      //ajouter les autres fonctions
-      window.alert("Commandé !");
+        //ajouter les autres fonctions
+        window.alert("Commandé !");
+      }
     } else {
       window.alert("Un ou plusieurs de vos champs ne sont pas bien renseignés");
     }
