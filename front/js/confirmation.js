@@ -10,7 +10,7 @@ let orderIdNew = document.getElementById("orderId");
 orderIdNew.innerText = orderIdConfirmed;
 console.log(orderIdNew);
 
-//supprimer les produits du panier
+//supprimer les produits du panier dans le localStorage
 localStorage.removeItem("cart");
 
 
