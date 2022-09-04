@@ -1,7 +1,19 @@
 console.log("page panier");
 //-----------------------------------------------------------------------------------//
+
+/**
+ * Appel de la fonction cart()
+ */
 cart();
-// quand utilisateur clique sur "Ajouter au panier", on lui passe les paramètres (id/color/quantity) (récupéré de page product)
+//-----------------------------------------------------------------------------------//
+
+/**
+ * Créer un objet cartLine avec les paramètres (id/color/quantity, récupérés de page product) au clic de l'utilisateur sur bouton "Ajouter au panier"
+ * @param {string} idProduct - l'identifiant du produit
+ * @param {string} colorProduct - la couleur du produit
+ * @param {number} quantityProduct - la quantité souhaitée et limitée entre 1 à 100
+ * @returns {Array}
+ */
 export function addToCart(idProduct, colorProduct, quantityProduct) {
   // on crée un objet cartLine avec paramètres, la variable cartLine contient un objet
   let cartLine = {
@@ -36,6 +48,11 @@ export function addToCart(idProduct, colorProduct, quantityProduct) {
   //console.log(cart);
 }
 //---------------------------------------------------------------------------------//
+
+/**
+ * Récupérer le panier
+ * @returns {(Array|object)}
+ */
 function getCart() {
   // fonction getCart (récupérer le panier)
   let basket = localStorage.getItem("cart"); // créer variable pour récupérer le localStorage
@@ -44,9 +61,12 @@ function getCart() {
     return []; // si pas null return le localStorage dans variable créée
   } else {
     return JSON.parse(basket);
-  } //-> le parser avec JSON.parse(cart)
+  } // le parser avec JSON.parse(cart)
 }
 
+/**
+ * Trier le panier par id et couleur avec method fetch
+ */
 async function cart() {
   const cartTotal = getCart();
   cartTotal.sort((a, b) => {
@@ -56,7 +76,7 @@ async function cart() {
   }); // récupérer cart dans variable
   console.log(cartTotal);
   for (let line of cartTotal) {
-    // console.log(line.color); //accès color
+    // accès color
     await fetch("http://localhost:3000/api/products/" + line.id)
       .then(function (res) {
         if (res.ok) {
@@ -74,6 +94,12 @@ async function cart() {
   }
 }
 //---------------------------------------------------------------------------------//
+/**
+ * Montrer le panier à l'utilisateur en passant par le DOM
+ * @param {string} product - l'identifiant du produit
+ * @param {string} basketColor - la couleur du produit
+ * @param {number} quantity - la quantité souhaitée et limitée entre 1 à 100
+ */
 function showCartLine(product, basketColor, quantity) {
   const section = document.getElementById("cart__items");
   // parcourir l'array (cart)
@@ -179,7 +205,12 @@ function showCartLine(product, basketColor, quantity) {
   });
 }
 //---------------------------------------------------------------------------------//
-//déclarer la fonction pour supprimer une ligne de produit du panier//
+
+/**
+ * Déclarer la fonction pour supprimer une ligne de produit du panier
+ * @param {string} productId
+ * @param {string} basketColor
+ */
 function deleteBasket(productId, basketColor) {
   const finalCart = getCart();
   let indexDeleted = finalCart.findIndex(
@@ -204,7 +235,12 @@ function deleteBasket(productId, basketColor) {
 }
 //---------------------------------------------------------------------------------//
 
-//déclarer la fonction pour modifer la quantité d'un produit
+/**
+ * Déclarer la fonction pour modifer la quantité d'un produit en respectant la règle valeur entre 1 à 100
+ * @param {string} productId
+ * @param {string} basketColor
+ * @param {number} quantityInput
+ */
 function modifyBasket(productId, basketColor, quantityInput) {
   const finalCart = getCart();
   let indexModify = finalCart.findIndex(
@@ -229,7 +265,9 @@ function modifyBasket(productId, basketColor, quantityInput) {
 }
 //---------------------------------------------------------------------------------//
 
-//déclarer fonction pour calculer la quantité totale de produits du panier
+/**
+ * Déclarer fonction pour calculer la quantité totale de produits du panier
+ */
 function totalProducts() {
   //récupérer le panier
   const totalCartProducts = getCart();
@@ -252,7 +290,9 @@ function totalProducts() {
 }
 //---------------------------------------------------------------------------------//
 
-//déclarer fonction pour calculer le prix total des produits du panier
+/**
+ * Déclarer fonction pour calculer le prix total des produits du panier
+ */
 function totalProductsPrice() {
   //récupérer le panier
   const totalCartProducts = getCart();
@@ -286,7 +326,11 @@ function totalProductsPrice() {
 // Déclarer une condition "si"
 if (document.getElementById("cartAndFormContainer")) {
   // Le formulaire existe alors on déclare et appelle les différentes fonctions pour analyser les champs demandés"
-  // Vérifier et récupérer champ nom
+
+  /**
+   * Vérifier et récupérer champ nom
+   * @returns {boolean}
+   */
   function verifyFirstName() {
     //récupère value firstName
     let valueName = document.getElementById("firstName").value;
@@ -308,7 +352,10 @@ if (document.getElementById("cartAndFormContainer")) {
   });
   //---------------------------------------------------------------------------------//
 
-  //Vérifier et récupérer champ prénom
+  /**
+   * Vérifier et récupérer champ prénom
+   * @returns {boolean}
+   */
   function verifyLastName() {
     //récupère value lastName
     let valueName = document.getElementById("lastName").value;
@@ -330,7 +377,10 @@ if (document.getElementById("cartAndFormContainer")) {
   });
   //---------------------------------------------------------------------------------//
 
-  //Vérifier et récupérer champ adresse
+  /**
+   * Vérifier et récupérer champ adresse
+   * @returns {boolean}
+   */
   function verifyAddress() {
     //récupère value address
     let valueAddress = document.getElementById("address").value;
@@ -353,7 +403,10 @@ if (document.getElementById("cartAndFormContainer")) {
   });
   //---------------------------------------------------------------------------------//
 
-  //Vérifier et récupérer le champ ville
+  /**
+   * Vérifier et récupérer le champ ville
+   * @returns {boolean}
+   */
   function verifyCity() {
     //récupère value city
     let valueCity = document.getElementById("city").value;
@@ -376,15 +429,17 @@ if (document.getElementById("cartAndFormContainer")) {
   });
   //---------------------------------------------------------------------------------//
 
-  //Vérifier et récupérer le champ email
+  /**
+   * Vérifier et récupérer le champ email
+   * @returns {boolean}
+   */
   function verifyEmail() {
     //récupère value email
     let valueEmail = document.getElementById("email").value;
     let errorEmail = document.getElementById("emailErrorMsg");
     console.log(errorEmail);
-    let masque1 =
-    /^[\w-.]+@([\w-]+.)+[\w-]{2,5}$/;
-      // /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gim;
+    let masque1 = /^[\w-.]+@([\w-]+.)+[\w-]{2,5}$/;
+    // /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gim;
 
     if (valueEmail.match(masque1)) {
       errorEmail.innerText = "";
@@ -403,7 +458,13 @@ if (document.getElementById("cartAndFormContainer")) {
   document.getElementById("order").addEventListener("click", (e) => {
     //empêcher le comportement par défaut
     e.preventDefault();
-    if (verifyFirstName() && verifyLastName() && verifyAddress() && verifyCity() && verifyEmail()) {
+    if (
+      verifyFirstName() &&
+      verifyLastName() &&
+      verifyAddress() &&
+      verifyCity() &&
+      verifyEmail()
+    ) {
       //créer objet contact
       let contact = {
         firstName: document.getElementById("firstName").value,
@@ -420,8 +481,10 @@ if (document.getElementById("cartAndFormContainer")) {
       let cart = getCart();
       console.log(cart);
 
-      if(cart.length == 0) {
-        window.alert("Attention, vous ne pouvez pas commander sans produit dans votre panier")
+      if (cart.length == 0) {
+        window.alert(
+          "Attention, vous ne pouvez pas commander sans produit dans votre panier"
+        );
       } else {
         for (let line of cart) {
           let id = line.id;

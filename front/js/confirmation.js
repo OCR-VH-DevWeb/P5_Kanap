@@ -12,9 +12,4 @@ console.log(orderIdNew);
 
 //supprimer les produits du panier dans le localStorage
 localStorage.removeItem("cart");
-
-
-
-
-
 //------------------------------------------------//
