@@ -1,4 +1,4 @@
-console.log("page confirmation")
+console.log("page confirmation");
 //---------------------------------------------------------------------------------//
 let urlConfirmation = new URL(window.location.href);
 console.log(urlConfirmation);
