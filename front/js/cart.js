@@ -438,7 +438,7 @@ if (document.getElementById("cartAndFormContainer")) {
     let valueEmail = document.getElementById("email").value;
     let errorEmail = document.getElementById("emailErrorMsg");
     console.log(errorEmail);
-    let masque1 = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    let masque1 =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,4}))$/;
 
     if (valueEmail.match(masque1)) {
       errorEmail.innerText = "";
