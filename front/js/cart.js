@@ -439,7 +439,6 @@ if (document.getElementById("cartAndFormContainer")) {
     let errorEmail = document.getElementById("emailErrorMsg");
     console.log(errorEmail);
     let masque1 = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    // /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gim;
 
     if (valueEmail.match(masque1)) {
       errorEmail.innerText = "";
