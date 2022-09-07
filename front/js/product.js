@@ -77,5 +77,6 @@ alertClick.addEventListener("click", function () {
   }
   if (checkCart == true) {
     addToCart(id, confirmedColor, confirmedQuantity);
+    window.alert("Votre produit a été ajouté avec succès dans votre panier!")
   }
 });

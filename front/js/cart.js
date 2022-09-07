@@ -438,7 +438,7 @@ if (document.getElementById("cartAndFormContainer")) {
     let valueEmail = document.getElementById("email").value;
     let errorEmail = document.getElementById("emailErrorMsg");
     console.log(errorEmail);
-    let masque1 = /^[\w-.]+@([\w-]+.)+[\w-]{2,5}$/;
+    let masque1 = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     // /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gim;
 
     if (valueEmail.match(masque1)) {
@@ -522,7 +522,7 @@ if (document.getElementById("cartAndFormContainer")) {
           });
 
         //ajouter les autres fonctions
-        window.alert("Commandé !");
+        window.alert("Commandé! Merci pour votre confiance!");
       }
     } else {
       window.alert("Un ou plusieurs de vos champs ne sont pas bien renseignés");
